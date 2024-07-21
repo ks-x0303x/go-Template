@@ -1,0 +1,41 @@
+version: '3' # composeファイルのバージョン
+services:
+  server-services:
+    # サービス名
+    container_name: server-container
+    build:
+      # ビルドに使うDockerファイルのパス
+      context: ./Src/TemplateApp
+      dockerfile: Dockerfile
+    volumes:
+      # マウントディレクトリ　ホストOSでファイルを/usr/app/Serverにコピーする
+      - ./Containerlog:/usr/app/Server/log
+    stdin_open: true
+    tty: true # コンテナの永続化
+    # command: tail -f /dev/null
+    ports:
+      - "8080:8080" #ホストOSのポートー＞コンテナのポート　バインディング
+    #env_file: # .envファイル
+    #  - ./build/.go_env
+    environment:
+      - TZ=Asia/Tokyo
+    #platform: linux/amd64    # この行を追加
+
+    # データベース
+  db-go-database-sql:
+    # M1チップのプラットフォームはarm64であるのに対し、
+    # mysql5.7*のイメージのサポートプラットフォームがAMD64で不一致のためプラットフォームを指定する
+    platform: linux/x86_64 #2024/05/26 add　https://qiita.com/jizya/items/38f15271903de629d1ab
+    image: mysql:5.7
+    container_name: db-go-database-sql
+    ports:
+      - "13306:3306"
+    volumes:
+      #コンテナ内のデータをホストOSに同期
+      - ./Database/mysql:/var/lib/mysql
+      - ./Database/env/my.cnf:/etc/mysql/my.cnf #Mysql 日本語化設定
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: test_password

@@ -1,0 +1,21 @@
+{
+    "go.useLanguageServer": true,
+    "gopls": {
+        "usePlaceholders": true,
+        "completeUnimported": true,
+        "staticcheck": true
+    },
+    "editor.formatOnSave": true,
+    "go.lintOnSave": "file",
+    "go.testOnSave": true,
+    "go.formatTool": "gofmt",
+    "go.testFlags": [
+        "-v"
+    ],
+    "editor.folding": true,
+    "editor.tabSize": 4, // インデントの幅を設定
+    "editor.insertSpaces": true,
+    "cSpell.words": [
+        "Databasemanager"
+    ], // タブの代わりにスペースを挿入
+}

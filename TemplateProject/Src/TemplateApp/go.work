@@ -1,0 +1,10 @@
+go 1.20
+
+use (
+	.
+	./Common/ExpansionString
+	./Common/Logger
+	./DatabaseManager
+	./Models/users
+	./Server
+)
